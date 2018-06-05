@@ -12,6 +12,12 @@ make create
 # Create the Kubernetes cluster
 make eks_create
 
+# Create worker nodes
+make nodes_create
+
+# Delete worker nodes
+make nodes_delete
+
 # Delete the Kubernetes cluster
 make eks_delete
 
