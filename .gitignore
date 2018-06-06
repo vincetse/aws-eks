@@ -42,3 +42,8 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
+
+# EKS
+kubectl
+heptio-authenticator-aws
+kubeconfig

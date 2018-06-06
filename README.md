@@ -15,6 +15,12 @@ make eks_create
 # Create worker nodes
 make nodes_create
 
+# Set up the kubeconfig file
+make kubeconfig
+
+# Get a shell in the Kubernetes cluster
+make shell
+
 # Delete worker nodes
 make nodes_delete
 
