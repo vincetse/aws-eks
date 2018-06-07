@@ -24,6 +24,11 @@ Parameters:
     Default: 192.168.192.0/18
     Description: CidrBlock for subnet 03 within the VPC
 
+  ClusterName:
+    Type: String
+    Default: eks
+    Description: EKS cluster name
+
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -157,6 +162,20 @@ Resources:
       - "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
       - "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 
+  EksCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: !Ref ClusterName
+      Version: "1.10"
+      RoleArn: !GetAtt EksServiceRole.Arn
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+        - !Ref ControlPlaneSecurityGroup
+        SubnetIds:
+        - !Ref Subnet01
+        - !Ref Subnet02
+        - !Ref Subnet03
+
 Outputs:
 
   SubnetIds:
@@ -174,3 +193,11 @@ Outputs:
   ServiceRoleArn:
     Description: EKS service role
     Value: !GetAtt EksServiceRole.Arn
+
+  EksEndpoint:
+    Description: EKS endpoint
+    Value: !GetAtt EksCluster.Endpoint
+
+  EksCertificateAuthorityData:
+    Description: EKS certificate authority data
+    Value: !GetAtt EksCluster.CertificateAuthorityData
